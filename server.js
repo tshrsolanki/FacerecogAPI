@@ -54,6 +54,6 @@ app.get("/profile/:id", (req, res) => {
       }
     });
 });
-app.listen(5000, () => {
-  console.log("app is runnning at port 5000");
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`app is runnning at port ${process.env.PORT} `);
 });
