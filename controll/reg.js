@@ -10,10 +10,10 @@ const handlereg = (req, res, pg, bycrypt) => {
       .into("login")
       .returning("email")
       .then((mail) => {
-        trx("users")
+        return trx("users")
           .returning("*")
           .insert({
-            email: email,
+            email: mail[0],
             name: name,
             joined: new Date(),
           })
@@ -23,7 +23,7 @@ const handlereg = (req, res, pg, bycrypt) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.json("unable"));
+  }).catch((err) => res.status(400).json(err));
 };
 
 module.exports = {
