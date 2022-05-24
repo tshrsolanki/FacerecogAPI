@@ -1,9 +1,9 @@
-const handlereg = (req, res, pg, bycrypt) => {
+const handlereg = (req, res, pg, bycrypt) => 
+{
   const { email, password, name } = req.body;
   const hash = bycrypt.hashSync(password);
   pg.transaction((trx) => {
-    trx
-      .insert({
+    trx.insert({
         hash: hash,
         email: email,
       })

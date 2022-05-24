@@ -28,7 +28,7 @@ app.post("/signin", (req, res) => {
   sign.handlesign(req, res, pg, bycrypt);
 });
 
-app.put("/register", (req, res) => {
+app.post("/register", (req, res) => {
   reg.handlereg(req, res, pg, bycrypt);
 });
 
