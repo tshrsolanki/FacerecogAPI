@@ -28,7 +28,9 @@ app.post("/signin", (req, res) => {
   sign.handlesign(req, res, pg, bycrypt);
 });
 
-app.post("/register", (req, res) => reg.handlereg(req, res, pg, bycrypt));
+app.post("/register", (req, res) => {
+  reg.handlereg(req, res, pg, bycrypt);
+});
 
 app.put("/image", (req, res) => {
   image.handleimage(req, res, pg);
