@@ -8,7 +8,7 @@ const reg = require("./controll/reg");
 const sign = require("./controll/sign");
 const image = require("./controll/image");
 
-const pg = knex({
+const db = knex({
   client: "pg",
   connection: {
     connectionString: process.env.DATABASE_URL,
@@ -25,15 +25,15 @@ app.get("/", (req, res) => {
 });
 
 app.post("/signin", (req, res) => {
-  sign.handlesign(req, res, pg, bycrypt);
+  sign.handlesign(req, res, db, bycrypt);
 });
 
 app.post("/register", (req, res) => {
-  reg.handlereg(req, res, pg, bycrypt);
+  reg.handlereg(req, res, db, bycrypt);
 });
 
 app.put("/image", (req, res) => {
-  image.handleimage(req, res, pg);
+  image.handleimage(req, res, db);
 });
 app.post("/imageurl", (req, res) => {
   image.handleapi(req, res);
@@ -41,7 +41,7 @@ app.post("/imageurl", (req, res) => {
 
 app.get("/profile/:id", (req, res) => {
   const { id } = req.params;
-  pg.select("*")
+  db.select("*")
     .from("users")
     .where({
       id: id,

@@ -11,9 +11,9 @@ const handleapi = (req, res) => {
     .catch((err) => res.status(400).json(err));
 };
 
-function handleimage(req, res, pg) {
+function handleimage(req, res, db) {
   const { id } = req.body;
-  pg("users")
+  db("users")
     .where("id", "=", id)
     .increment("entries", 1)
     .then(() => {
