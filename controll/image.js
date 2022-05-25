@@ -17,7 +17,7 @@ function handleimage(req, res, db) {
     .where("id", "=", id)
     .increment("entries", 1)
     .then(() => {
-      return pg
+      return db
         .select("*")
         .from("users")
         .where("id", "=", id)

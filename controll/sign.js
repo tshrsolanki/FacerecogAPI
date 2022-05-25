@@ -17,7 +17,10 @@ const handlesign = (req, res, db, bycrypt) => {
         res.json("wrong credentials");
       }
     })
-    .catch((err) => res.json(err));
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 };
 
 module.exports = {
