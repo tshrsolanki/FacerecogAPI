@@ -13,7 +13,7 @@ const handlereg = (req, res, db, bycrypt) => {
         return trx("users")
           .returning("*")
           .insert({
-            email: mail[0],
+            email: email,
             name: name,
             joined: new Date(),
           })
