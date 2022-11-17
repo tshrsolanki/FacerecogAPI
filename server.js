@@ -53,7 +53,7 @@ app.put("/image", (req, res) => {
   image.handleimage(req, res, db);
 });
 app.post("/imageurl", (req, res) => {
-  image.handleapi(req, res);
+  image.handleapi(req, res, db);
 });
 app.post("/profile/:id", (req, res) => {
   const { id } = req.params;
