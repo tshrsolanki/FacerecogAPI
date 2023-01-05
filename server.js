@@ -7,7 +7,7 @@ const knex = require("knex");
 const reg = require("./controll/reg");
 const sign = require("./controll/sign");
 const image = require("./controll/image");
-
+const { redisStart } = require("./sessions");
 // const db = knex({
 //   client: "pg",
 //   connection: {
@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 });
 app.post("/signout", async (req, res) => {
   const { authorization } = req.headers;
-  const { deleteSession } = require("./sessions");
+  const { deleteSession, redisStart } = require("./sessions");
   const data = await deleteSession(authorization);
   res.json(data);
 });
@@ -75,12 +75,16 @@ app.get("/profile/:id", (req, res) => {
     })
     .then((users) => {
       if (users.length) {
-        console.log(users[0]);
       } else {
         res.json("not found");
       }
     });
 });
-app.listen(5000 || process.env.PORT, () => {
-  console.log(`app is runnning at port ${process.env.PORT || 5000} `);
-});
+
+const start = async () => {
+  await redisStart();
+  app.listen(5000 || process.env.PORT, () => {
+    console.log(`app is runnning at port ${process.env.PORT || 5000} `);
+  });
+};
+start();

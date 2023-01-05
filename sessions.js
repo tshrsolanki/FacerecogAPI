@@ -5,30 +5,34 @@ const redisStart = async () => {
   await redisClient
     .connect()
     .then(() => {
-      console.log("Redis ready");
+      console.log("redis ready", "||", "sessions.js", "line-", 8);
     })
     .catch(() => {
       console.log("Redis connection error");
     });
 };
-redisStart();
 
 const getAuthTokenId = async (req, res, db) => {
-  const { authorization } = req.headers;
-  const id = await redisClient.get(authorization);
-  if (id) {
-    return await db
-      .select("*")
-      .from("users")
-      .where({
-        id,
-      })
-      .returning("*")
-      .then((data) => {
-        res.json(data[0]);
-      });
+  try {
+    const { authorization } = req.headers;
+    const id = await redisClient.get(authorization);
+    if (id) {
+      return await db
+        .select("*")
+        .from("users")
+        .where({
+          id,
+        })
+        .returning("*")
+        .then((data) => {
+          res.json(data[0]);
+        });
+    }
+    return res.json("unauthorized");
+  } catch (error) {
+    console.log(error, "||", "sessions.js", "line-", 33);
+    return res.json("unauthorized");
   }
-  return res.json("unauthorized");
 };
 
 const createSession = async (user) => {
@@ -52,4 +56,5 @@ module.exports = {
   createSession,
   getAuthTokenId,
   deleteSession,
+  redisStart,
 };

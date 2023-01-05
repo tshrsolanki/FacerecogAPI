@@ -34,7 +34,6 @@ const signInAuthentication = async (req, res, db, bycrypt) => {
     getAuthTokenId(req, res, db);
   } else {
     const user = await handleSignIn(req, res, db, bycrypt);
-
     if (user.id) {
       const data = await createSession(user);
       if (data) {
