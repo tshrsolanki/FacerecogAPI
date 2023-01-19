@@ -9,6 +9,7 @@ const handleapi = async (req, res, db) => {
   try {
     data = await app.models.predict(clarifai.FACE_DETECT_MODEL, req.body.input);
   } catch (error) {
+    console.log(error.message, "||", "image.js", "line-", 12);
     return res.json({ message: "Invaild url" });
   }
   if (!data.outputs[0].data.regions) {
